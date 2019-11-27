@@ -12,9 +12,31 @@ router.get('/checkin', function(req, res, next) {
   visitor.findAll()
   .then(visitor => {
     console.log(visitor);
-    res.sendStatus(200);
+    res.send(visitor);
   })
   .catch(err =>console.log(err))
+
+});
+
+
+router.post('/checkin', function (request, response) {
+    // return users.create({
+    //     name: request.body.name,
+    //     role: request.body.role,
+    //     email: request.body.email
+    // }).then(function (users) {
+    //     if (users) {
+    //         response.send(users);
+    //     } else {
+    //         response.status(400).send('Error in insert new record');
+    //     }
+    // });
+
+    console.log(request.body.name);
+    console.log(request.body.email);
+    console.log(request.body.phone);
+
+    response.sendStatus(200);
 
 });
 
