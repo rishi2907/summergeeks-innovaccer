@@ -12,7 +12,7 @@ router.get('/checkin', function(req, res, next) {
   visitor.findAll()
   .then(visitor => {
     console.log(visitor);
-    res.send(visitor);
+    res.sendStatus(200);
   })
   .catch(err =>console.log(err))
 
