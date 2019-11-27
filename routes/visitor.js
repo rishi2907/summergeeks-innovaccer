@@ -3,8 +3,7 @@ var router = express.Router();
 const db = require('../config/database');
 const visitor = require('../models/visitor');
 
-
-/* GET users listing. */
+// to get all current checkin users
 router.get('/checkin', function(req, res, next) {
   visitor.findAll()
   .then(visitor => {
@@ -15,7 +14,7 @@ router.get('/checkin', function(req, res, next) {
 
 });
 
-
+// to post visitor details
 router.post('/checkin', function (request, response) {
     visitor.create({
         name: request.body.name,
@@ -30,23 +29,6 @@ router.post('/checkin', function (request, response) {
             response.status(400).send('Error in insert new record');
         }
     });
-
-    console.log(request.body);
-    //console.log(request.body.email);
-    // console.log(request.body.phone);
-
 });
-
-
-// router.post("/checkin", (req, res) =>
-//     db.visitor.create({
-//       name: req.body.name,
-//       email: req.body.email,
-//       host: req.body.host,
-//       phone: req.body.phone,
-//       checkin:req.body.checkin,
-//
-//     }).then( (result) => res.json(result) )
-//   );
 
 module.exports = router;

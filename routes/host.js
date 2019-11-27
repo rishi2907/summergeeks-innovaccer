@@ -4,10 +4,8 @@ const db = require('../config/database');
 const host = require('../models/host');
 
 
-/* GET users listing. */
+// to get all host details
 router.get('/in', function(req, res, next) {
-
-  // here comes your find command.
 
   host.findAll()
   .then(host => {
@@ -18,7 +16,7 @@ router.get('/in', function(req, res, next) {
 
 });
 
-
+// POST host details
 router.post('/in', function (request, response) {
     host.create({
         name: request.body.name,
@@ -33,23 +31,6 @@ router.post('/in', function (request, response) {
             response.status(400).send('Error in insert new record');
         }
     });
-
-    console.log(request.body);
-    //console.log(request.body.email);
-    // console.log(request.body.phone);
-
 });
-
-
-// router.post("/checkin", (req, res) =>
-//     db.visitor.create({
-//       name: req.body.name,
-//       email: req.body.email,
-//       host: req.body.host,
-//       phone: req.body.phone,
-//       checkin:req.body.checkin,
-//
-//     }).then( (result) => res.json(result) )
-//   );
 
 module.exports = router;
