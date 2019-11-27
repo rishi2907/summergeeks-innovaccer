@@ -6,9 +6,6 @@ const visitor = require('../models/visitor');
 
 /* GET users listing. */
 router.get('/checkin', function(req, res, next) {
-
-  // here comes your find command.
-
   visitor.findAll()
   .then(visitor => {
     console.log(visitor);
@@ -20,23 +17,23 @@ router.get('/checkin', function(req, res, next) {
 
 
 router.post('/checkin', function (request, response) {
-    // return users.create({
-    //     name: request.body.name,
-    //     role: request.body.role,
-    //     email: request.body.email
-    // }).then(function (users) {
-    //     if (users) {
-    //         response.send(users);
-    //     } else {
-    //         response.status(400).send('Error in insert new record');
-    //     }
-    // });
+    visitor.create({
+        name: request.body.name,
+        email: request.body.email,
+        phone: request.body.phone,
+        hostName:request.body.hostName,
+        checkInTime : request.body.checkInTime,
+  }).then((visitor)=> {
+        if (visitor) {
+            response.send(visitor);
+        } else {
+            response.status(400).send('Error in insert new record');
+        }
+    });
 
-    console.log(request.body.name);
-    console.log(request.body.email);
-    console.log(request.body.phone);
-
-    response.sendStatus(200);
+    console.log(request.body);
+    //console.log(request.body.email);
+    // console.log(request.body.phone);
 
 });
 
