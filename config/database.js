@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 // database
-module.exports = new Sequelize('tfGJn2sP7l', 'ohqMpdfFHo','LaxL0QBuj0',{
+module.exports = new Sequelize('SUubgxsbr6', 'SUubgxsbr6','7zih22hOGp',{
   host : 'remotemysql.com',
   dialect:'mysql',
   operatorsAliases:false,

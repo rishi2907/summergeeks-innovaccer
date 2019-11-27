@@ -2,9 +2,9 @@ const Sequelize = require('sequelize');
 const db = require('../config/database');
 const Model=Sequelize.Model;
 
-class Visitor extends Model{};
+class Host extends Model{};
 
-Visitor.init({
+Host.init({
 		name:{
 			type:Sequelize.STRING,
 			allowNull: false
@@ -17,21 +17,19 @@ Visitor.init({
 			type:Sequelize.STRING,
 			allowNull:false
 		},
-		checkInTime:{
+		Time:{
 			type:Sequelize.STRING,
 			allowNull:false
 		},
-    hostName:{
-      type:Sequelize.STRING,
-      	allowNull:false
-    }
+		Address:{
+			type:Sequelize.STRING
+		}
 
 	},{
 		sequelize:db,
     timestamps: false,
-		modelName:'Visitor'
+		modelName:'Host'
 	})
 
-
-Visitor.sync({force:false});
-module.exports=Visitor;
+Host.sync({force:false});
+module.exports=Host;

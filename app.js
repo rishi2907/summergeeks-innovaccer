@@ -7,9 +7,10 @@ const db = require('./config/database');
 //const Sequelize = require('sequelize');
 
 
-var indexRouter = require('./routes/index');
+var hostRouter = require('./routes/host');
 var usersRouter = require('./routes/users');
 var visitorRouter = require('./routes/visitor');
+var allRouter = require('./routes/all');
 
 
 
@@ -31,9 +32,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/', indexRouter);
+app.use('/', hostRouter);
 app.use('/users', usersRouter);
 app.use('/visitor',visitorRouter);
+app.use('/all',allRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
