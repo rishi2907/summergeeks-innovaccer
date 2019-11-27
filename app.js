@@ -32,7 +32,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/', hostRouter);
+app.use('/host', hostRouter);
 app.use('/users', usersRouter);
 app.use('/visitor',visitorRouter);
 app.use('/all',allRouter);

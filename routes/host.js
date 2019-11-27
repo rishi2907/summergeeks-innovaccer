@@ -5,16 +5,38 @@ const host = require('../models/host');
 
 
 /* GET users listing. */
-router.get('/host', function(req, res, next) {
+router.get('/in', function(req, res, next) {
 
   // here comes your find command.
 
   host.findAll()
   .then(host => {
     console.log(host);
-    res.sendStatus(200);
+    res.send(host);
   })
   .catch(err =>console.log(err))
+
+});
+
+
+router.post('/in', function (request, response) {
+    host.create({
+        name: request.body.name,
+        email: request.body.email,
+        phone: request.body.phone,
+        Time:request.body.time,
+        Address : request.body.address,
+  }).then((host)=> {
+        if (host) {
+            response.send(host);
+        } else {
+            response.status(400).send('Error in insert new record');
+        }
+    });
+
+    console.log(request.body);
+    //console.log(request.body.email);
+    // console.log(request.body.phone);
 
 });
 
