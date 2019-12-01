@@ -3,6 +3,15 @@ var router = express.Router();
 const db = require('../config/database');
 const visitor = require('../models/visitor');
 const log = require('../models/log');
+const nodemailer = require('nodemailer');
+
+
+
+const accountSid = 'ACcbafc12f24c574c4ab12ce5279556015';
+const authToken = 'd3129a8c7794aaa7b02255af35785b4d';
+const client = require('twilio')(accountSid, authToken);
+
+
 
 // to get all current checkin users
 router.get('/checkin', function(req, res, next) {
@@ -30,6 +39,40 @@ router.post('/checkin', function (request, response) {
             response.status(400).send('Error in insert new record');
         }
     });
+
+    var transporter = nodemailer.createTransport({
+      service: 'Yahoo',
+      auth: {
+        user: 'innovaccer@yahoo.com',
+        pass: 'lkpmgahdxpmkvuyt'
+      }
+    });
+
+    var mailOptions = {
+      from: 'innovaccer@yahoo.com',
+      to: 'rishimotoe3@gmail.com',
+      subject: 'One More Awesome Visitor In Your Office',
+      text: 'Details'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+
+    // var number = "+91" + request.body.phone;
+    //   var message = client.messages.create({
+    //       body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
+    //       from: '+19389999593',
+    //       to: number
+    //     })
+    //     .then(message =>  console.log(message.status))
+    //     .done();
+
+
 });
 
 
