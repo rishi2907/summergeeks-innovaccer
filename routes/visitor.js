@@ -4,13 +4,7 @@ const db = require('../config/database');
 const visitor = require('../models/visitor');
 const log = require('../models/log');
 const nodemailer = require('nodemailer');
-
-
-
-const accountSid = 'ACcbafc12f24c574c4ab12ce5279556015';
-const authToken = 'd3129a8c7794aaa7b02255af35785b4d';
-const client = require('twilio')(accountSid, authToken);
-
+const sendSMS = require('../config/sendSMS');
 
 
 // to get all current checkin users
@@ -26,6 +20,16 @@ router.get('/checkin', function(req, res, next) {
 
 // to post visitor details
 router.post('/checkin', function (request, response) {
+
+  let data={
+    name: request.body.name,
+    email: request.body.email,
+    phone: request.body.phone,
+    hostName:request.body.hostName,
+    hostEmail:request.body.hostEmail,
+    checkInTime : request.body.checkInTime,
+  }
+
     visitor.create({
         name: request.body.name,
         email: request.body.email,
@@ -35,6 +39,13 @@ router.post('/checkin', function (request, response) {
   }).then((visitor)=> {
         if (visitor) {
             response.send(visitor);
+
+
+            sendSMS.sendSMS(data,(err)=>{
+              if(err){
+                console.log(err);
+              }
+            });
         } else {
             response.status(400).send('Error in insert new record');
         }
@@ -48,11 +59,20 @@ router.post('/checkin', function (request, response) {
       }
     });
 
+    var message = `
+    <strong>Visitor Name :</strong> `+data.name+`
+    <br><strong>Visitor Email :</strong> `+data.email+`
+    <br><strong>Visitor Phone Number :</strong> `+data.phone+`
+    <br><strong>CheckIn Time :</strong> `+data.checkInTime+`
+    <br><strong>Has schedule Meeting with you .</strong>
+    `;
+
     var mailOptions = {
       from: 'innovaccer@yahoo.com',
-      to: 'rishimotoe3@gmail.com',
-      subject: 'One More Awesome Visitor In Your Office',
-      text: 'Details'
+      to: data.hostEmail,
+      subject: 'One More Visitor In Your Office',
+      html: message,
+
     };
 
     transporter.sendMail(mailOptions, function(error, info){
@@ -62,6 +82,11 @@ router.post('/checkin', function (request, response) {
         console.log('Email sent: ' + info.response);
       }
     });
+
+
+
+
+
 
     // var number = "+91" + request.body.phone;
     //   var message = client.messages.create({
@@ -106,10 +131,60 @@ router.post('/checkout', function (request, response) {
                           console.log(err);
                         });
                 response.send(visit);
+
+                var transporter = nodemailer.createTransport({
+                  service: 'Yahoo',
+                  auth: {
+                    user: 'innovaccer@yahoo.com',
+                    pass: 'lkpmgahdxpmkvuyt'
+                  }
+                });
+
+                var message = `<h3> Thankyou for Visit Our Office </h3>
+                <strong>Visitor Name :</strong> `+visit.name+`
+                <br><strong>Visitor Email :</strong> `+visit.email+`
+                <br><strong>Visitor Phone Number :</strong> `+visit.phone+`
+                <br><strong>Host Email Address :</strong> `+visit.hostName+`
+                <br><strong>CheckIn Time :</strong> `+visit.checkInTime+`
+                <br><strong>CheckOut Time :</strong> `+visit.checkOutTime+`
+                <br><strong>Address Visited :</strong> `+visit.Address+`
+
+                <br>
+                <br>
+                Thanks
+                <br>
+                Innovaccer Team
+                `;
+
+                var mailOptions = {
+                  from: 'innovaccer@yahoo.com',
+                  to: visit.email,
+                  subject: 'Your Visit Details',
+                  html: message,
+
+                };
+
+                transporter.sendMail(mailOptions, function(error, info){
+                  if (error) {
+                    console.log(error);
+                  } else {
+                    console.log('Email sent: ' + info.response);
+                  }
+                });
+
+
+
+
+
             } else {
                 response.status(400).send('Error in insert new record');
             }
         }))
+
+
+
+
+
 });
 
 module.exports = router;
