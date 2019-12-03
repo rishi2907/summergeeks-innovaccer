@@ -6,6 +6,16 @@ Project Hosted On Heroku and You can access through this link (https://assignmen
 ## Problem Statement
     Given the visitors that we have in office and outside, there is a need to for an entry management software.
 ## Approach Used:
+![Flow Diagram](assignment.png)
+
+    MYSQL SERVER:
+    it contains three tables:-
+            Host(to store Host Details)
+            Visitor(to store current Visitor Details)
+            Log (to Store All checkout Visitor Details)
+    
+    
+    
 
 
 
@@ -32,8 +42,8 @@ This repository contains Backend API code for this software and hosted here (htt
     For Backend API run
 
     1: Clone this Repository
-         $ https://github.com/rishi2907/summergeeks-innovaccer.git
-    2: Change diractory
+         $ git clone https://github.com/rishi2907/summergeeks-innovaccer.git
+    2: Change directory
          $ cd summergeeks-innovaccer
     3: Need to Start MYSQL Server and create user with USERNAME : user , PASSWORD     :password having All privileges
     4: Install the dependencies
@@ -44,6 +54,14 @@ This repository contains Backend API code for this software and hosted here (htt
     Now server is running ...
 
     For Frontend React App:
+    1: Clone React App Repository
+        $ git clone https://github.com/rishi2907/summergeeks-innovaccer-frontend
+    2: Change directory
+        $ cd summergeeks-innovaccer-frontend
+    3: Install The Dependencies:
+        $ npm install
+    4:  Run Reeact Server
+        $ npm start
 
 
 #### Tools and Technology Used :
